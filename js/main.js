@@ -1,4 +1,4 @@
-import {setFormValue, submitSignUpForm, validateEmail, validatePassword} from "./utils.js"
+import {setFormValue, submitForm, validateEmail, validatePassword, validatePasswordRepeat, switchForms} from "./utils.js"
 
 
 ////// ДЕМОНСТРАЦИОННЫЙ УЧАСТОК КОДА. На оценку не влияет, исключительно для саморазвития.
@@ -34,12 +34,15 @@ console.log(document)
 const first_name_id = 'first_name'
 const last_name_id = 'last_name'
 const password_id = 'password'
+const password_repeat_id = 'password-repeat'
 const email_id = 'email'
+const si_email_id = 'si_email'
+const si_password_id = 'si_password'
 
 const sign_in_link_id = 'sign_in_link'
 const sign_up_form_id = 'sign_up_form'
-// const sign_in_form_id = 'sign_in_form'  // Пригодится
 const sign_up_btn_id = 'sign_up_btn'
+const sign_in_btn_id = 'sign_in_btn'
 const sign_in_form_id = 'sign_in_form'
 
 
@@ -51,10 +54,23 @@ const sign_in_form_id = 'sign_in_form'
 const first_name = document.getElementById(first_name_id);
 first_name.oninput = (e) => setFormValue(first_name_id, e.target.value)  // Установить значение без валидации
 
+const last_name = document.getElementById(last_name_id);
+last_name.oninput = (e) => setFormValue(last_name_id, e.target.value)
+
 const email = document.getElementById(email_id);
 email.oninput = (e) => setFormValue(email_id, e.target.value, validateEmail) // Установить значение с валидацией
 
+const pass = document.getElementById(password_id);
+pass.oninput = (e) => setFormValue(password_id, e.target.value, validatePassword)
 
+const pass_repeat = document.getElementById(password_repeat_id);
+pass_repeat.oninput = (e) => setFormValue(password_repeat_id, e.target.value, validatePasswordRepeat)
+
+const si_pass = document.getElementById(si_password_id);
+si_pass.oninput = (e) => setFormValue(si_password_id, e.target.value, validatePassword)
+
+const si_email = document.getElementById(si_email_id);
+si_email.oninput = (e) => setFormValue(si_email_id, e.target.value, validateEmail)
 
 // Меняем стили объекта DOM дерева. Это позволяет скрыть форму регистрации и показать форму авторизации
 // Объект формы не исключается из DOM дерева, а просто становистя невидимым
@@ -62,14 +78,22 @@ const switch_to_sign_in = document.getElementById(sign_in_link_id);
 switch_to_sign_in.onclick = (e) => {
   document.getElementById(sign_up_form_id).style.display = "none"
   document.getElementById(sign_in_form_id).style.display = ""
+  switchForms()
 }
-
 
 const sign_up_btn = document.getElementById(sign_up_btn_id);
 sign_up_btn.onclick = (e) => {
   // При нажатии кнопки в форме по умолчанию происходит перезагрузка страницы.
   // Чтобы отключить его, нужно отменить стандартное поведение события
   e.preventDefault()
-  submitSignUpForm()
+  submitForm()
+}
+
+const sign_in_btn = document.getElementById(sign_in_btn_id);
+sign_in_btn.onclick = (e) => {
+  // При нажатии кнопки в форме по умолчанию происходит перезагрузка страницы.
+  // Чтобы отключить его, нужно отменить стандартное поведение события
+  e.preventDefault()
+  submitForm()
 }
 
